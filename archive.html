@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -17,7 +16,8 @@
 
 <header class="site-header">
   <nav>
-    <a href="index.html">kysolace</a> <a href="music.html">Music</a>
+    <a href="index.html">kysolace</a>
+    <a href="music.html">Music</a>
     <a href="archive.html" class="active">Archive</a>
     <a href="ideas.html">Ideas</a>
   </nav>
@@ -26,9 +26,7 @@
 <main>
 
 <section class="archive">
-
   <div class="grid" id="archive-grid"></div>
-
 </section>
 
 </main>
@@ -38,44 +36,47 @@
 </div>
 
 <script>
-async function loadArchive() {
-  const grid = document.getElementById("archive-grid");
+const DATA_URL = "archive-photos.json";
+const grid = document.getElementById("archive-grid");
+
+function thumbnailUrl(originalUrl) {
+  if (!originalUrl) return "";
 
   try {
-    const response = await fetch("archive-photos.json", {
-      cache: "no-store"
-    });
+    const url = new URL(originalUrl);
+    const parts = url.pathname.split("/");
 
-    if (!response.ok) {
-      throw new Error("Could not load archive-photos.json");
+    // Uploadcare delivery URLs are /<uuid>/[filename].
+    // Insert the 1200x1200 preview operation after the UUID so
+    // the original file remains untouched for the lightbox.
+    const uuidIndex = parts.findIndex(part =>
+      /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(part)
+    );
+
+    if (uuidIndex !== -1) {
+      const alreadyTransformed = parts.includes("-") &&
+        parts.includes("preview");
+
+      if (!alreadyTransformed) {
+        parts.splice(uuidIndex + 1, 0, "-", "preview", "1200x1200");
+      }
+
+      url.pathname = parts.join("/");
+      return url.toString();
     }
-
-    const photos = await response.json();
-
-    photos.forEach(photo => {
-      const article = document.createElement("article");
-      article.className = "tile";
-
-      const image = document.createElement("img");
-      image.src = photo.image;
-      image.alt = photo.alt || "";
-      image.loading = "lazy";
-      image.onclick = () => openLightbox(photo.image);
-
-      article.appendChild(image);
-      grid.appendChild(article);
-    });
-
   } catch (error) {
-    console.error("Archive failed to load:", error);
+    console.warn("Could not build Uploadcare thumbnail URL:", error);
   }
+
+  return originalUrl;
 }
 
-function openLightbox(src) {
+function openLightbox(src, alt = "") {
   const lightbox = document.getElementById("lightbox");
   const image = document.getElementById("lightbox-image");
 
   image.src = src;
+  image.alt = alt;
   lightbox.classList.add("active");
   document.body.classList.add("lightbox-open");
 }
@@ -87,6 +88,47 @@ function closeLightbox() {
   lightbox.classList.remove("active");
   document.body.classList.remove("lightbox-open");
   image.src = "";
+}
+
+function renderArchive(items) {
+  grid.innerHTML = "";
+
+  items.forEach(item => {
+    const original = item.image || item.original_file_url || item.cdnUrl || "";
+    if (!original) return;
+
+    const article = document.createElement("article");
+    article.className = "tile";
+
+    const image = document.createElement("img");
+    image.src = thumbnailUrl(original);
+    image.alt = item.alt || item.filename || "";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.addEventListener("click", () => openLightbox(original, image.alt));
+
+    article.appendChild(image);
+    grid.appendChild(article);
+  });
+}
+
+async function loadArchive() {
+  try {
+    const response = await fetch(`${DATA_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Could not load ${DATA_URL}`);
+    }
+
+    const data = await response.json();
+    const items = Array.isArray(data) ? data : (data.photos || []);
+
+    renderArchive(items);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 loadArchive();
