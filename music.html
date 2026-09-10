@@ -40,7 +40,7 @@
 
       <div class="player-controls">
         <button id="prev" type="button" aria-label="Previous track">‹</button>
-        <button id="main-play" class="main-play" type="button" aria-label="Play">▶</button>
+        <button id="main-play" class="main-play" type="button" aria-label="Play"><span class="play-symbol" aria-hidden="true"></span></button>
         <button id="next" type="button" aria-label="Next track">›</button>
       </div>
 
@@ -123,7 +123,7 @@
       if (!track) return;
       track.classList.remove("playing");
       const icon = track.querySelector(".play-icon");
-      if (icon) icon.textContent = "▶";
+      if (icon) icon.className = "play-icon";
       setProgress(track, 0);
     }
 
@@ -181,7 +181,7 @@
 
         article.innerHTML = `
           <button class="track-play" aria-label="Play track ${index + 1}" type="button">
-            <span class="play-icon">▶</span>
+            <span class="play-icon" aria-hidden="true"></span>
           </button>
 
           <div class="track-main">
@@ -271,8 +271,8 @@
           currentTrack = track;
           currentIndex = index;
           track.classList.add("playing");
-          track.querySelector(".play-icon").textContent = "Ⅱ";
-          mainPlay.textContent = "Ⅱ";
+          track.querySelector(".play-icon").className = "play-icon is-playing";
+          mainPlay.classList.add("is-playing");
           playerNumber.textContent = String(index + 1).padStart(2, "0");
           playerTitle.textContent = track.querySelector(".track-name").textContent;
           totalTime.textContent = formatTime(durations[index]);
@@ -280,8 +280,8 @@
 
         widget.bind(SC.Widget.Events.PAUSE, () => {
           track.classList.remove("playing");
-          track.querySelector(".play-icon").textContent = "▶";
-          if (track === currentTrack) mainPlay.textContent = "▶";
+          track.querySelector(".play-icon").className = "play-icon";
+          if (track === currentTrack) mainPlay.classList.remove("is-playing");
         });
 
         widget.bind(SC.Widget.Events.PLAY_PROGRESS, data => {
@@ -297,7 +297,7 @@
 
         widget.bind(SC.Widget.Events.FINISH, () => {
           resetTrack(track);
-          mainPlay.textContent = "▶";
+          mainPlay.classList.remove("is-playing");
           playerProgressFill.style.width = "0%";
 
           if (index < tracks.length - 1) {
