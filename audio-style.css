@@ -492,3 +492,14 @@ nav a.active {
   opacity: .35;
   cursor: not-allowed;
 }
+
+/* REMOVE ALL LINK STYLING */
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  color: #111;
+  text-decoration: none;
+}
