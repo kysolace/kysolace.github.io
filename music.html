@@ -251,9 +251,9 @@ nav a.active {
   text-decoration: none !important;
 }
 
-/* Hide the small pause glyph; keep the main track control intact */
-.track.playing .play-icon {
-  visibility: hidden;
+/* Keep only the large track pause icon; hide the small generic glyph */
+.track-play .play-icon.is-playing {
+  background: transparent !important;
 }
 
 
