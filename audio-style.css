@@ -172,6 +172,22 @@ nav a.active {
 }
 
 
+/* TRACK ARTWORK */
+
+.track-artwork {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  background: #e6e6e3;
+  background-size: cover;
+  background-position: center;
+}
+
+.track-artwork:not(.has-image) {
+  visibility: hidden;
+}
+
 /* TRACK PROGRESS */
 
 .track-progress {
