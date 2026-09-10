@@ -70,78 +70,74 @@ nav a.active {
 }
 
 
-/* TRACKLIST */
+/* TRACK GRID */
 
 .project {
   width: 100%;
-  max-width: 900px;
+  max-width: 100%;
 }
 
 .tracklist {
+  display: grid;
   width: 100%;
-
-  /*
-    Space between each track.
-    Increase this number if you want
-    the tracks even more spread out.
-  */
-  row-gap: 23px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px 12px;
 }
 
 
-/*
-  TRACK COLUMNS
-
-  30px  = play button
-  1fr   = track name + progress
-  42px  = duration
-  65px  = release date
-*/
+/* TRACK CARD */
 
 .track {
+  min-width: 0;
   display: grid;
-
-  grid-template-columns:
-    34px
-    minmax(0, 1fr)
-    48px
-    72px;
-
-  align-items: center;
-
-  column-gap: 9px;
-
-  min-height: 78px;
-
-  /*
-    No divider.
-  */
-
+  grid-template-rows: auto auto auto;
+  align-content: start;
   border: 0;
-
-  transition: opacity .15s ease;
+  transition: none;
 }
 
 
+/* TRACK ARTWORK */
 
-/* PLAY BUTTON */
+.track-main {
+  min-width: 0;
+  display: contents;
+}
+
+.track-artwork {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e6e6e3;
+  background-size: cover;
+  background-position: center;
+}
+
+.track-artwork:not(.has-image) {
+  visibility: hidden;
+}
+
+
+/* TRACK CONTROLS */
+
+.track-controls {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+}
 
 .track-play {
   appearance: none;
-
   border: 0;
   background: transparent;
-
   width: 24px;
   height: 24px;
-
   padding: 0;
-
   color: #111;
-
   font-family: Arial, Helvetica, sans-serif;
   font-size: 9px;
-
   cursor: pointer;
 }
 
@@ -177,97 +173,52 @@ nav a.active {
   position: relative;
 }
 
-
-/* TRACK MAIN */
-
-.track-main {
-  min-width: 0;
-}
-
-.track-title {
-  display: flex;
-  align-items: center;
-
-  gap: 15px;
-
-  font-size: 11px;
-}
-
-.track-number {
-  width: 18px;
-
-  color: #888;
-
-  font-size: 9px;
-}
-
-.track.playing .track-title {
-  text-decoration: underline;
-}
-
-
-/* TRACK ARTWORK */
-
-.track-artwork {
-  display: block;
-  width: 35px;
-  height: 35px;
-  flex: 0 0 35px;
-  background: #e6e6e3;
-  background-size: cover;
-  background-position: center;
-}
-
-.track-artwork:not(.has-image) {
-  visibility: hidden;
-}
-
-/* TRACK PROGRESS */
-
 .track-progress {
   width: 100%;
-
   height: 2px;
-
-  margin-top: 9px;
-
   background: #deded9;
-
   cursor: pointer;
 }
 
 .track-progress-fill {
   width: 0;
-
   height: 100%;
-
   background: #111;
 }
 
-
-/* DURATION */
-
 .track-duration {
   text-align: right;
-
   font-size: 9px;
-
   color: #777;
-
   white-space: nowrap;
 }
 
 
-/* RELEASE DATE */
+/* TRACK INFO */
+
+.track-info {
+  min-width: 0;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.track-title {
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .track-release {
-  text-align: right;
-
+  margin-top: 3px;
   font-size: 9px;
-
   color: #777;
-
   white-space: nowrap;
+}
+
+.track.playing .track-title {
+  text-decoration: underline;
 }
 
 
@@ -437,8 +388,9 @@ nav a.active {
     padding-top: 62px;
   }
 
-  .project {
-    max-width: 100%;
+  .tracklist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 9px;
   }
 
 }
@@ -446,7 +398,7 @@ nav a.active {
 
 /* PHONE */
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
 
   body {
     padding-bottom: 116px;
@@ -457,45 +409,31 @@ nav a.active {
   }
 
   .tracklist {
-    row-gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 8px;
   }
 
-  .track {
-    grid-template-columns:
-      29px
-      minmax(0, 1fr)
-      42px
-      64px;
-
-    min-height: 72px;
-
-    column-gap: 7px;
+  .track-controls {
+    grid-template-columns: 24px minmax(0, 1fr) 34px;
+    gap: 5px;
+    margin-top: 10px;
   }
 
   .track-title {
-    gap: 10px;
+    font-size: 10px;
   }
 
-  .track-progress {
-    margin-top: 8px;
-  }
-
-  .track-release {
+  .track-release,
+  .track-duration {
     font-size: 8px;
   }
-
 
   /* MOBILE PLAYER */
 
   .player-inner {
     display: grid;
-
-    grid-template-columns:
-      1fr
-      auto;
-
+    grid-template-columns: 1fr auto;
     gap: 10px;
-
     padding: 10px 12px;
   }
 
@@ -506,7 +444,6 @@ nav a.active {
   .player-controls {
     grid-column: 2;
     grid-row: 1;
-
     gap: 11px;
   }
 
@@ -532,19 +469,11 @@ nav a.active {
 @media (max-width: 380px) {
 
   .tracklist {
-    row-gap: 18px;
+    gap: 20px 7px;
   }
 
-  .track {
-    grid-template-columns:
-      26px
-      minmax(0, 1fr)
-      39px
-      58px;
-  }
-
-  .track-release {
-    font-size: 7px;
+  .track-controls {
+    grid-template-columns: 22px minmax(0, 1fr) 32px;
   }
 
 }
@@ -741,22 +670,27 @@ nav a.active {
         article.dataset.soundcloud = item.permalink_url || item.url || "";
 
         article.innerHTML = `
-          <button class="track-play" aria-label="Play track ${index + 1}" type="button">
-            <span class="play-icon" aria-hidden="true"></span>
-          </button>
-
           <div class="track-main">
-            <div class="track-title">
-              <span class="track-artwork" aria-hidden="true"></span>
-              <span class="track-name"></span>
+            <span class="track-artwork" aria-hidden="true"></span>
+
+            <div class="track-controls">
+              <button class="track-play" aria-label="Play track ${index + 1}" type="button">
+                <span class="play-icon" aria-hidden="true"></span>
+              </button>
+
+              <div class="track-progress">
+                <div class="track-progress-fill"></div>
+              </div>
+
+              <span class="track-duration">—</span>
             </div>
-            <div class="track-progress">
-              <div class="track-progress-fill"></div>
+
+            <div class="track-info">
+              <div class="track-title"><span class="track-name"></span></div>
+              <div class="track-release">${formatReleaseDate(item.created_at || item.release_date)}</div>
             </div>
           </div>
 
-          <span class="track-duration">—</span>
-          <span class="track-release">${formatReleaseDate(item.created_at || item.release_date)}</span>
           <div class="soundcloud-host" aria-hidden="true"></div>
         `;
 
