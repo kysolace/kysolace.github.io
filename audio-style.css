@@ -109,9 +109,6 @@ nav a.active {
   transition: opacity .15s ease;
 }
 
-.track:hover {
-  opacity: .65;
-}
 
 
 /* PLAY BUTTON */
