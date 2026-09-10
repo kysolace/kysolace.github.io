@@ -113,24 +113,45 @@ nav a.active {
   margin: 0;
   color: #111;
   font-family: Arial, Helvetica, sans-serif;
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 
 .track-play:hover {
-  opacity: .5;
+  opacity: 1;
 }
 
 .track-play .play-icon {
-  width: 28px;
-  height: 34px;
+  width: 44px;
+  height: 50px;
+  margin: 0;
+  position: relative;
+  background: transparent;
+  clip-path: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
-.track-play .play-icon.is-playing {
+.track-play .play-icon::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 28px;
   height: 34px;
+  transform: translate(-50%, -50%);
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.track-play .play-icon:hover {
+  opacity: .5;
+}
+
+.track-play .play-icon.is-playing::before {
   background: linear-gradient(
     to right,
     currentColor 0 9px,
