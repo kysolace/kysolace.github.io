@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
 
 const publicKey = process.env.UPLOADCARE_PUBLIC_KEY;
 const secretKey = process.env.UPLOADCARE_SECRET_KEY;
@@ -23,12 +23,15 @@ async function getAllFiles() {
   let nextUrl = API_URL;
 
   while (nextUrl) {
+    console.log(`Fetching: ${nextUrl}`);
+
     const response = await fetch(nextUrl, {
       headers,
     });
 
     if (!response.ok) {
       const body = await response.text();
+
       throw new Error(
         `Uploadcare API error ${response.status}: ${body}`
       );
@@ -44,7 +47,11 @@ async function getAllFiles() {
 }
 
 async function main() {
+  console.log("Syncing Uploadcare archive...");
+
   const files = await getAllFiles();
+
+  console.log(`Found ${files.length} Uploadcare files.`);
 
   const photos = files
     .filter(file => {
@@ -62,6 +69,8 @@ async function main() {
       uploadedAt: file.datetime_uploaded,
     }));
 
+  console.log(`Found ${photos.length} ready images.`);
+
   const outputPath = path.join(
     process.cwd(),
     "archive-photos.json"
@@ -73,7 +82,7 @@ async function main() {
     "utf8"
   );
 
-  console.log(`Synced ${photos.length} archive photos.`);
+  console.log(`Wrote ${outputPath}`);
 }
 
 main().catch(error => {
