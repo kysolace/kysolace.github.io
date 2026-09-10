@@ -100,6 +100,7 @@ nav a.active {
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
+  aspect-ratio: 1 / 1;
 }
 
 .placeholder {
@@ -116,11 +117,9 @@ nav a.active {
 .tile img {
   display: block;
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: cover;
-  background: #e6e6e3;
+  object-position: center;
   cursor: zoom-in;
 }
 
