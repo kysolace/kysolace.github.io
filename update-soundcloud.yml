@@ -1,0 +1,43 @@
+name: Update SoundCloud Mirror
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Twice an hour, deliberately away from the top of the hour.
+    - cron: "17,47 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-soundcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync SoundCloud tracks
+        env:
+          SOUNDCLOUD_CLIENT_ID: ${{ secrets.SOUNDCLOUD_CLIENT_ID }}
+          SOUNDCLOUD_CLIENT_SECRET: ${{ secrets.SOUNDCLOUD_CLIENT_SECRET }}
+        run: node scripts/update-soundcloud.mjs
+
+      - name: Commit updated track data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add soundcloud-tracks.json
+
+          if git diff --cached --quiet; then
+            echo "No SoundCloud changes to commit."
+          else
+            git commit -m "Update SoundCloud tracks"
+            git push
+          fi
