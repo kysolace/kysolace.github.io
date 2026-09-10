@@ -14,7 +14,7 @@ const API_URL =
   "https://api.uploadcare.com/files/?stored=true&limit=1000&ordering=-datetime_uploaded";
 
 const headers = {
-  Accept: "application/vnd.uploadcare.v0.7+json",
+  Accept: "application/vnd.uploadcare-v0.7+json",
   Authorization: `Uploadcare.Simple ${publicKey}:${secretKey}`,
 };
 
@@ -24,10 +24,14 @@ async function getAllFiles() {
 
   while (nextUrl) {
     console.log(`Fetching: ${nextUrl}`);
+    console.log(`Accept header: ${headers.Accept}`);
 
     const response = await fetch(nextUrl, {
+      method: "GET",
       headers,
     });
+
+    console.log(`Uploadcare response: ${response.status}`);
 
     if (!response.ok) {
       const body = await response.text();
@@ -54,13 +58,11 @@ async function main() {
   console.log(`Found ${files.length} Uploadcare files.`);
 
   const photos = files
-    .filter(file => {
-      return (
-        file.is_image === true &&
-        file.is_ready === true &&
-        file.original_file_url
-      );
-    })
+    .filter(file =>
+      file.is_image === true &&
+      file.is_ready === true &&
+      file.original_file_url
+    )
     .map(file => ({
       id: file.uuid,
       filename: file.original_filename,
