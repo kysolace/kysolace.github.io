@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<title>kysolace — Gallery</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav>
+    <a href="index.html">kysolace</a>
+    //<a href="releases.html">Releases</a>
+    <a href="archive.html" class="active">Gallery</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="archive">
+  <div class="grid" id="archive-grid"></div>
+</section>
+
+</main>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-image" src="" alt="">
+</div>
+
+<script>
+const DATA_URL = "archive-photos.json";
+const grid = document.getElementById("archive-grid");
+
+function thumbnailUrl(originalUrl) {
+  if (!originalUrl) return "";
+
+  try {
+    const url = new URL(originalUrl);
+    const parts = url.pathname.split("/");
+
+    // Uploadcare delivery URLs are /<uuid>/[filename].
+    // Insert the 1200x1200 preview operation after the UUID so
+    // the original file remains untouched for the lightbox.
+    const uuidIndex = parts.findIndex(part =>
+      /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(part)
+    );
+
+    if (uuidIndex !== -1) {
+      const alreadyTransformed = parts.includes("-") &&
+        parts.includes("preview");
+
+      if (!alreadyTransformed) {
+        parts.splice(uuidIndex + 1, 0, "-", "preview", "1200x1200");
+      }
+
+      url.pathname = parts.join("/");
+      return url.toString();
+    }
+  } catch (error) {
+    console.warn("Could not build Uploadcare thumbnail URL:", error);
+  }
+
+  return originalUrl;
+}
+
+function openLightbox(src, alt = "") {
+  const lightbox = document.getElementById("lightbox");
+  const image = document.getElementById("lightbox-image");
+
+  image.src = src;
+  image.alt = alt;
+  lightbox.classList.add("active");
+  document.body.classList.add("lightbox-open");
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const image = document.getElementById("lightbox-image");
+
+  lightbox.classList.remove("active");
+  document.body.classList.remove("lightbox-open");
+  image.src = "";
+}
+
+function renderArchive(items) {
+  grid.innerHTML = "";
+
+  items.forEach(item => {
+    const original = item.image || item.original_file_url || item.cdnUrl || "";
+    if (!original) return;
+
+    const article = document.createElement("article");
+    article.className = "tile";
+
+    const image = document.createElement("img");
+    image.src = thumbnailUrl(original);
+    image.alt = item.alt || item.filename || "";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.addEventListener("click", () => openLightbox(original, image.alt));
+
+    article.appendChild(image);
+    grid.appendChild(article);
+  });
+}
+
+async function loadArchive() {
+  try {
+    const response = await fetch(`${DATA_URL}?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Could not load ${DATA_URL}`);
+    }
+
+    const data = await response.json();
+    const items = Array.isArray(data) ? data : (data.photos || []);
+
+    renderArchive(items);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+loadArchive();
+</script>
+
+</body>
+</html>
