@@ -119,10 +119,15 @@ nav a.active {
   border: 0;
   background: transparent;
 
+  /*
+    Keep the clickable area small.
+    Only this 24x24 area will trigger playback.
+  */
   width: 24px;
   height: 24px;
 
   padding: 0;
+  margin: 0;
 
   color: #111;
 
@@ -130,13 +135,19 @@ nav a.active {
   font-size: 9px;
 
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .track-play:hover {
   opacity: .5;
 }
 
+
 /* CSS-DRAWN PLAY / PAUSE ICONS */
+
 .play-icon,
 .play-symbol {
   display: block;
@@ -208,6 +219,7 @@ nav a.active {
 .track-artwork:not(.has-image) {
   visibility: hidden;
 }
+
 
 /* TRACK PROGRESS */
 
@@ -536,7 +548,9 @@ nav a.active {
 
 }
 
+
 /* SOUNDCLOUD BACKEND */
+
 .soundcloud-host {
   position: absolute;
   width: 1px;
