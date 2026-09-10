@@ -57,92 +57,106 @@ nav a.active {
 }
 
 
-/* TRACKLIST */
+/* TRACK GRID */
 
 .project {
   width: 100%;
-  max-width: 900px;
+  max-width: 100%;
 }
 
 .tracklist {
+  display: grid;
   width: 100%;
-
-  /*
-    Space between each track.
-    Increase this number if you want
-    the tracks even more spread out.
-  */
-  row-gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px 12px;
 }
 
 
-/*
-  TRACK COLUMNS
-
-  30px  = play button
-  1fr   = track name + progress
-  42px  = duration
-  65px  = release date
-*/
+/* TRACK CARD */
 
 .track {
+  min-width: 0;
   display: grid;
-
-  grid-template-columns:
-    30px
-    minmax(0, 1fr)
-    42px
-    65px;
-
-  align-items: center;
-
-  column-gap: 8px;
-
-  min-height: 62px;
-
-  /*
-    No divider.
-  */
-
+  grid-template-rows: auto auto auto;
+  align-content: start;
   border: 0;
-
-  transition: opacity .15s ease;
+  transition: none;
 }
 
 
+/* TRACK PLAY AREA */
 
-/* PLAY BUTTON */
+.track-main {
+  min-width: 0;
+}
 
 .track-play {
   appearance: none;
-
   border: 0;
   background: transparent;
-
-  /*
-    Keep the clickable area small.
-    Only this 24x24 area will trigger playback.
-  */
-  width: 24px;
-  height: 24px;
-
+  width: 100%;
+  aspect-ratio: 4 / 3;
   padding: 0;
   margin: 0;
-
   color: #111;
-
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 9px;
-
-  cursor: pointer;
-
+  cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 
 .track-play:hover {
+  opacity: 1;
+}
+
+.track-play .play-icon {
+  width: 44px;
+  height: 50px;
+  margin: 0;
+  position: relative;
+  background: transparent;
+  clip-path: none;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.track-play .play-icon::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 28px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.track-play .play-icon:hover {
   opacity: .5;
+}
+
+.track-play .play-icon.is-playing::before {
+  background: linear-gradient(
+    to right,
+    currentColor 0 9px,
+    transparent 9px 19px,
+    currentColor 19px 28px
+  );
+  clip-path: none;
+}
+
+
+/* TRACK CONTROLS */
+
+.track-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
 }
 
 
@@ -176,97 +190,52 @@ nav a.active {
 }
 
 
-/* TRACK MAIN */
-
-.track-main {
-  min-width: 0;
-}
-
-.track-title {
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  font-size: 11px;
-}
-
-.track-number {
-  width: 18px;
-
-  color: #888;
-
-  font-size: 9px;
-}
-
-.track.playing .track-title {
-  text-decoration: underline;
-}
-
-
-/* TRACK ARTWORK */
-
-.track-artwork {
-  display: block;
-  width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
-  background: #e6e6e3;
-  background-size: cover;
-  background-position: center;
-}
-
-.track-artwork:not(.has-image) {
-  visibility: hidden;
-}
-
-
-/* TRACK PROGRESS */
-
 .track-progress {
   width: 100%;
-
   height: 2px;
-
-  margin-top: 7px;
-
   background: #deded9;
-
   cursor: pointer;
 }
 
 .track-progress-fill {
   width: 0;
-
   height: 100%;
-
   background: #111;
 }
 
-
-/* DURATION */
-
 .track-duration {
   text-align: right;
-
   font-size: 9px;
-
   color: #777;
-
   white-space: nowrap;
 }
 
 
-/* RELEASE DATE */
+/* TRACK INFO */
+
+.track-info {
+  min-width: 0;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.track-title {
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .track-release {
-  text-align: right;
-
+  margin-top: 3px;
   font-size: 9px;
-
   color: #777;
-
   white-space: nowrap;
+}
+
+.track.playing .track-title {
+  text-decoration: underline;
 }
 
 
@@ -281,16 +250,11 @@ nav a.active {
 
 .player {
   position: fixed;
-
   left: 0;
   bottom: 0;
-
   width: 100%;
-
   z-index: 20;
-
   background: #f5f5f0;
-
   border-top: 1px solid #d8d8d3;
 }
 
@@ -314,27 +278,20 @@ nav a.active {
 
 .player-track {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
-
   min-width: 0;
 }
 
 .player-number {
   color: #888;
-
   font-size: 9px;
 }
 
 .player-title {
   font-size: 10px;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
 }
 
@@ -343,27 +300,19 @@ nav a.active {
 
 .player-controls {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 15px;
 }
 
 .player-controls button {
   appearance: none;
-
   border: 0;
   background: transparent;
-
   padding: 0;
-
   color: #111;
-
   font-family: Arial, Helvetica, sans-serif;
-
   font-size: 15px;
-
   cursor: pointer;
 }
 
@@ -374,11 +323,8 @@ nav a.active {
 .player-controls .main-play {
   width: 28px;
   height: 28px;
-
   font-size: 10px;
-
   border: 1px solid #111;
-
   border-radius: 50%;
 }
 
@@ -411,19 +357,14 @@ nav a.active {
 
 .player-progress {
   width: 100%;
-
   height: 2px;
-
   background: #deded9;
-
   cursor: pointer;
 }
 
 .player-progress-fill {
   width: 0;
-
   height: 100%;
-
   background: #111;
 }
 
@@ -436,8 +377,9 @@ nav a.active {
     padding-top: 62px;
   }
 
-  .project {
-    max-width: 100%;
+  .tracklist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 9px;
   }
 
 }
@@ -445,7 +387,7 @@ nav a.active {
 
 /* PHONE */
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
 
   body {
     padding-bottom: 116px;
@@ -456,30 +398,22 @@ nav a.active {
   }
 
   .tracklist {
-    row-gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 8px;
   }
 
-  .track {
-    grid-template-columns:
-      25px
-      minmax(0, 1fr)
-      38px
-      58px;
-
-    min-height: 58px;
-
-    column-gap: 6px;
+  .track-controls {
+    grid-template-columns: minmax(0, 1fr) 34px;
+    gap: 5px;
+    margin-top: 10px;
   }
 
   .track-title {
-    gap: 8px;
+    font-size: 10px;
   }
 
-  .track-progress {
-    margin-top: 6px;
-  }
-
-  .track-release {
+  .track-release,
+  .track-duration {
     font-size: 8px;
   }
 
@@ -488,13 +422,8 @@ nav a.active {
 
   .player-inner {
     display: grid;
-
-    grid-template-columns:
-      1fr
-      auto;
-
+    grid-template-columns: 1fr auto;
     gap: 10px;
-
     padding: 10px 12px;
   }
 
@@ -505,7 +434,6 @@ nav a.active {
   .player-controls {
     grid-column: 2;
     grid-row: 1;
-
     gap: 11px;
   }
 
@@ -531,19 +459,11 @@ nav a.active {
 @media (max-width: 380px) {
 
   .tracklist {
-    row-gap: 14px;
+    gap: 20px 7px;
   }
 
-  .track {
-    grid-template-columns:
-      23px
-      minmax(0, 1fr)
-      35px
-      52px;
-  }
-
-  .track-release {
-    font-size: 7px;
+  .track-controls {
+    grid-template-columns: minmax(0, 1fr) 32px;
   }
 
 }
