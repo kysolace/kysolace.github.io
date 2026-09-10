@@ -195,6 +195,7 @@ nav a.active {
   height: 2px;
   background: #deded9;
   cursor: pointer;
+  touch-action: none;
 }
 
 .track-progress-fill {
@@ -360,6 +361,7 @@ nav a.active {
   height: 2px;
   background: #deded9;
   cursor: pointer;
+  touch-action: none;
 }
 
 .player-progress-fill {
