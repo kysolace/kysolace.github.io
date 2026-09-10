@@ -97,24 +97,47 @@ nav a.active {
 }
 
 
-/* TRACK ARTWORK */
+/* TRACK PLAY AREA */
 
 .track-main {
   min-width: 0;
-  display: contents;
 }
 
-.track-artwork {
-  display: block;
+.track-play {
+  appearance: none;
+  border: 0;
+  background: transparent;
   width: 100%;
   aspect-ratio: 4 / 3;
-  background: #e6e6e3;
-  background-size: cover;
-  background-position: center;
+  padding: 0;
+  margin: 0;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.track-artwork:not(.has-image) {
-  visibility: hidden;
+.track-play:hover {
+  opacity: .5;
+}
+
+.track-play .play-icon {
+  width: 28px;
+  height: 34px;
+}
+
+.track-play .play-icon.is-playing {
+  width: 28px;
+  height: 34px;
+  background: linear-gradient(
+    to right,
+    currentColor 0 9px,
+    transparent 9px 19px,
+    currentColor 19px 28px
+  );
+  clip-path: none;
 }
 
 
@@ -122,30 +145,15 @@ nav a.active {
 
 .track-controls {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr) 38px;
+  grid-template-columns: minmax(0, 1fr) 38px;
   align-items: center;
   gap: 7px;
   margin-top: 12px;
 }
 
-.track-play {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  color: #111;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 9px;
-  cursor: pointer;
-}
-
-.track-play:hover {
-  opacity: .5;
-}
 
 /* CSS-DRAWN PLAY / PAUSE ICONS */
+
 .play-icon,
 .play-symbol {
   display: block;
@@ -172,6 +180,7 @@ nav a.active {
 .main-play .play-symbol {
   position: relative;
 }
+
 
 .track-progress {
   width: 100%;
@@ -233,16 +242,11 @@ nav a.active {
 
 .player {
   position: fixed;
-
   left: 0;
   bottom: 0;
-
   width: 100%;
-
   z-index: 20;
-
   background: #f5f5f0;
-
   border-top: 1px solid #d8d8d3;
 }
 
@@ -266,27 +270,20 @@ nav a.active {
 
 .player-track {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
-
   min-width: 0;
 }
 
 .player-number {
   color: #888;
-
   font-size: 9px;
 }
 
 .player-title {
   font-size: 10px;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
 }
 
@@ -295,27 +292,19 @@ nav a.active {
 
 .player-controls {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 15px;
 }
 
 .player-controls button {
   appearance: none;
-
   border: 0;
   background: transparent;
-
   padding: 0;
-
   color: #111;
-
   font-family: Arial, Helvetica, sans-serif;
-
   font-size: 15px;
-
   cursor: pointer;
 }
 
@@ -326,11 +315,8 @@ nav a.active {
 .player-controls .main-play {
   width: 28px;
   height: 28px;
-
   font-size: 10px;
-
   border: 1px solid #111;
-
   border-radius: 50%;
 }
 
@@ -363,19 +349,14 @@ nav a.active {
 
 .player-progress {
   width: 100%;
-
   height: 2px;
-
   background: #deded9;
-
   cursor: pointer;
 }
 
 .player-progress-fill {
   width: 0;
-
   height: 100%;
-
   background: #111;
 }
 
@@ -414,7 +395,7 @@ nav a.active {
   }
 
   .track-controls {
-    grid-template-columns: 24px minmax(0, 1fr) 34px;
+    grid-template-columns: minmax(0, 1fr) 34px;
     gap: 5px;
     margin-top: 10px;
   }
@@ -427,6 +408,7 @@ nav a.active {
   .track-duration {
     font-size: 8px;
   }
+
 
   /* MOBILE PLAYER */
 
@@ -473,12 +455,14 @@ nav a.active {
   }
 
   .track-controls {
-    grid-template-columns: 22px minmax(0, 1fr) 32px;
+    grid-template-columns: minmax(0, 1fr) 32px;
   }
 
 }
 
+
 /* SOUNDCLOUD BACKEND */
+
 .soundcloud-host {
   position: absolute;
   width: 1px;
@@ -501,7 +485,8 @@ nav a.active {
 
 </style>
 
-  <script src="https://w.soundcloud.com/player/api.js"></script>
+<script src="https://w.soundcloud.com/player/api.js"></script>
+
 </head>
 
 <body>
@@ -515,365 +500,1025 @@ nav a.active {
     </nav>
   </header>
 
+
   <main class="audio-page">
+
     <section class="project">
-      <div class="tracklist" id="tracklist" aria-live="polite"></div>
+
+      <div
+        class="tracklist"
+        id="tracklist"
+        aria-live="polite">
+      </div>
+
     </section>
+
   </main>
 
+
+  <!-- BOTTOM PLAYER -->
+
   <div class="player">
+
     <div class="player-inner">
+
       <div class="player-track">
-        <span class="player-number" id="player-number">01</span>
-        <div class="player-title" id="player-title">—</div>
+
+        <span
+          class="player-number"
+          id="player-number">
+          01
+        </span>
+
+        <div
+          class="player-title"
+          id="player-title">
+          —
+        </div>
+
       </div>
+
 
       <div class="player-controls">
-        <button id="prev" type="button" aria-label="Previous track">‹</button>
-        <button id="main-play" class="main-play" type="button" aria-label="Play"><span class="play-symbol" aria-hidden="true"></span></button>
-        <button id="next" type="button" aria-label="Next track">›</button>
+
+        <button
+          id="prev"
+          type="button"
+          aria-label="Previous track">
+          ‹
+        </button>
+
+        <button
+          id="main-play"
+          class="main-play"
+          type="button"
+          aria-label="Play">
+
+          <span
+            class="play-symbol"
+            aria-hidden="true">
+          </span>
+
+        </button>
+
+        <button
+          id="next"
+          type="button"
+          aria-label="Next track">
+          ›
+        </button>
+
       </div>
+
 
       <div class="player-time">
-        <span id="current-time">0:00</span>
-        <div class="player-progress" id="player-progress" role="slider" aria-label="Seek" tabindex="0">
-          <div class="player-progress-fill" id="player-progress-fill"></div>
+
+        <span id="current-time">
+          0:00
+        </span>
+
+        <div
+          class="player-progress"
+          id="player-progress"
+          role="slider"
+          aria-label="Seek"
+          tabindex="0">
+
+          <div
+            class="player-progress-fill"
+            id="player-progress-fill">
+          </div>
+
         </div>
-        <span id="total-time">0:00</span>
+
+        <span id="total-time">
+          0:00
+        </span>
+
       </div>
+
     </div>
+
   </div>
 
-  <script>
-    /*
-      Automatic SoundCloud mirror
-      ----------------------------
-      This page does NOT contain individual track links.
-      GitHub Actions should generate soundcloud-tracks.json from your
-      public SoundCloud profile. This page then renders that file.
 
-      Expected JSON:
-      {
-        "tracks": [
-          {
-            "title": "Track name",
-            "permalink_url": "https://soundcloud.com/kysolace/example",
-            "artwork_url": "https://...",
-            "duration": 123456,
-            "created_at": "2026-09-10T..."
-          }
-        ]
-      }
-    */
+<script>
 
-    const DATA_URL = "soundcloud-tracks.json";
+/*
+  Automatic SoundCloud mirror
+  ----------------------------
 
-    const tracklist = document.getElementById("tracklist");
-    const mainPlay = document.getElementById("main-play");
-    const prev = document.getElementById("prev");
-    const next = document.getElementById("next");
-    const playerNumber = document.getElementById("player-number");
-    const playerTitle = document.getElementById("player-title");
-    const currentTime = document.getElementById("current-time");
-    const totalTime = document.getElementById("total-time");
-    const playerProgress = document.getElementById("player-progress");
-    const playerProgressFill = document.getElementById("player-progress-fill");
+  This page does NOT contain individual track links.
 
-    let tracks = [];
-    let widgets = [];
-    let widgetReady = [];
-    let durations = [];
-    let currentTrack = null;
-    let currentIndex = -1;
+  GitHub Actions should generate
+  soundcloud-tracks.json from your
+  public SoundCloud profile.
 
-    function formatTime(ms) {
-      if (!Number.isFinite(ms) || ms <= 0) return "—";
-      const totalSeconds = Math.floor(ms / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = String(totalSeconds % 60).padStart(2, "0");
-      return `${minutes}:${seconds}`;
+  This page then renders that file.
+*/
+
+
+const DATA_URL = "soundcloud-tracks.json";
+
+
+const tracklist =
+  document.getElementById("tracklist");
+
+const mainPlay =
+  document.getElementById("main-play");
+
+const prev =
+  document.getElementById("prev");
+
+const next =
+  document.getElementById("next");
+
+const playerNumber =
+  document.getElementById("player-number");
+
+const playerTitle =
+  document.getElementById("player-title");
+
+const currentTime =
+  document.getElementById("current-time");
+
+const totalTime =
+  document.getElementById("total-time");
+
+const playerProgress =
+  document.getElementById("player-progress");
+
+const playerProgressFill =
+  document.getElementById("player-progress-fill");
+
+
+let tracks = [];
+let widgets = [];
+let widgetReady = [];
+let durations = [];
+
+let currentTrack = null;
+let currentIndex = -1;
+
+
+
+function formatTime(ms) {
+
+  if (!Number.isFinite(ms) || ms <= 0)
+    return "—";
+
+  const totalSeconds =
+    Math.floor(ms / 1000);
+
+  const minutes =
+    Math.floor(totalSeconds / 60);
+
+  const seconds =
+    String(totalSeconds % 60)
+      .padStart(2, "0");
+
+  return `${minutes}:${seconds}`;
+}
+
+
+
+function formatReleaseDate(value) {
+
+  if (!value) return "";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime()))
+    return "";
+
+  const month =
+    String(date.getMonth() + 1)
+      .padStart(2, "0");
+
+  const day =
+    String(date.getDate())
+      .padStart(2, "0");
+
+  const year =
+    String(date.getFullYear())
+      .slice(-2);
+
+  return `${month}.${day}.${year}`;
+}
+
+
+
+function setProgress(track, percent) {
+
+  const fill =
+    track.querySelector(
+      ".track-progress-fill"
+    );
+
+  if (fill)
+    fill.style.width =
+      `${Math.max(
+        0,
+        Math.min(100, percent)
+      )}%`;
+}
+
+
+
+function resetTrack(track) {
+
+  if (!track) return;
+
+  track.classList.remove("playing");
+
+  const icon =
+    track.querySelector(".play-icon");
+
+  if (icon)
+    icon.className = "play-icon";
+
+  setProgress(track, 0);
+}
+
+
+
+function updatePlayer(track, index) {
+
+  currentTrack = track;
+  currentIndex = index;
+
+  playerNumber.textContent =
+    String(index + 1)
+      .padStart(2, "0");
+
+  playerTitle.textContent =
+    track.querySelector(
+      ".track-name"
+    )?.textContent || "—";
+
+  currentTime.textContent =
+    "0:00";
+
+  totalTime.textContent =
+    formatTime(durations[index]);
+
+  playerProgressFill.style.width =
+    "0%";
+}
+
+
+
+function loadTrack(
+  index,
+  autoplay = false
+) {
+
+  if (!tracks.length)
+    return;
+
+  if (index < 0)
+    index = tracks.length - 1;
+
+  if (index >= tracks.length)
+    index = 0;
+
+  const track = tracks[index];
+
+  if (!widgetReady[index])
+    return;
+
+  if (
+    currentTrack &&
+    currentTrack !== track
+  ) {
+    resetTrack(currentTrack);
+  }
+
+  updatePlayer(track, index);
+
+  if (autoplay)
+    widgets[index].play();
+}
+
+
+
+function toggleTrack(track) {
+
+  const index =
+    tracks.indexOf(track);
+
+  if (!widgetReady[index])
+    return;
+
+  if (currentTrack !== track) {
+
+    loadTrack(index, true);
+
+    return;
+  }
+
+  widgets[index].isPaused(
+    paused => {
+
+      if (paused)
+        widgets[index].play();
+
+      else
+        widgets[index].pause();
+
     }
+  );
+}
 
-    function formatReleaseDate(value) {
-      if (!value) return "";
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return "";
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      const year = String(date.getFullYear()).slice(-2);
-      return `${month}.${day}.${year}`;
-    }
 
-    function setProgress(track, percent) {
-      const fill = track.querySelector(".track-progress-fill");
-      if (fill) fill.style.width = `${Math.max(0, Math.min(100, percent))}%`;
-    }
 
-    function resetTrack(track) {
-      if (!track) return;
-      track.classList.remove("playing");
-      const icon = track.querySelector(".play-icon");
-      if (icon) icon.className = "play-icon";
-      setProgress(track, 0);
-    }
+function renderTracks(items) {
 
-    function updatePlayer(track, index) {
-      currentTrack = track;
-      currentIndex = index;
-      playerNumber.textContent = String(index + 1).padStart(2, "0");
-      playerTitle.textContent = track.querySelector(".track-name")?.textContent || "—";
-      currentTime.textContent = "0:00";
-      totalTime.textContent = formatTime(durations[index]);
-      playerProgressFill.style.width = "0%";
-    }
+  tracklist.innerHTML = "";
 
-    function loadTrack(index, autoplay = false) {
-      if (!tracks.length) return;
-      if (index < 0) index = tracks.length - 1;
-      if (index >= tracks.length) index = 0;
+  if (!items.length) {
 
-      const track = tracks[index];
-      if (!widgetReady[index]) return;
+    tracklist.innerHTML =
+      '<div style="padding:20px 0;">' +
+      'No public tracks found.' +
+      '</div>';
 
-      if (currentTrack && currentTrack !== track) resetTrack(currentTrack);
-      updatePlayer(track, index);
+    return;
+  }
 
-      if (autoplay) widgets[index].play();
-    }
 
-    function toggleTrack(track) {
-      const index = tracks.indexOf(track);
-      if (!widgetReady[index]) return;
+  items.forEach((item, index) => {
 
-      if (currentTrack !== track) {
-        loadTrack(index, true);
-        return;
-      }
+    const article =
+      document.createElement("article");
 
-      widgets[index].isPaused(paused => {
-        if (paused) widgets[index].play();
-        else widgets[index].pause();
-      });
-    }
+    article.className = "track";
 
-    function renderTracks(items) {
-      tracklist.innerHTML = "";
+    article.dataset.soundcloud =
+      item.permalink_url ||
+      item.url ||
+      "";
 
-      if (!items.length) {
-        tracklist.innerHTML = '<div style="padding:20px 0;">No public tracks found.</div>';
-        return;
-      }
 
-      items.forEach((item, index) => {
-        const article = document.createElement("article");
-        article.className = "track";
-        article.dataset.soundcloud = item.permalink_url || item.url || "";
+    article.innerHTML = `
 
-        article.innerHTML = `
-          <div class="track-main">
-            <span class="track-artwork" aria-hidden="true"></span>
+      <div class="track-main">
 
-            <div class="track-controls">
-              <button class="track-play" aria-label="Play track ${index + 1}" type="button">
-                <span class="play-icon" aria-hidden="true"></span>
-              </button>
+        <button
+          class="track-play"
+          aria-label="Play track ${index + 1}"
+          type="button">
 
-              <div class="track-progress">
-                <div class="track-progress-fill"></div>
-              </div>
+          <span
+            class="play-icon"
+            aria-hidden="true">
+          </span>
 
-              <span class="track-duration">—</span>
+        </button>
+
+
+        <div class="track-controls">
+
+          <div class="track-progress">
+
+            <div
+              class="track-progress-fill">
             </div>
 
-            <div class="track-info">
-              <div class="track-title"><span class="track-name"></span></div>
-              <div class="track-release">${formatReleaseDate(item.created_at || item.release_date)}</div>
-            </div>
           </div>
 
-          <div class="soundcloud-host" aria-hidden="true"></div>
-        `;
 
-        article.querySelector(".track-name").textContent = item.title || "Untitled";
+          <span class="track-duration">
+            —
+          </span>
 
-        if (item.artwork_url) {
-          const artwork = article.querySelector(".track-artwork");
-          artwork.style.backgroundImage = `url("${item.artwork_url}")`;
-          artwork.classList.add("has-image");
-        }
+        </div>
 
-        tracklist.appendChild(article);
-      });
 
-      tracks = [...document.querySelectorAll(".track")];
-      widgets = new Array(tracks.length);
-      widgetReady = new Array(tracks.length).fill(false);
-      durations = items.map(item => Number(item.duration) || 0);
+        <div class="track-info">
 
-      initializeWidgets(items);
-    }
+          <div class="track-title">
 
-    function initializeWidgets(items) {
-      tracks.forEach((track, index) => {
-        const button = track.querySelector(".track-play");
-        const progress = track.querySelector(".track-progress");
-        const url = track.dataset.soundcloud.trim();
-        const host = track.querySelector(".soundcloud-host");
+            <span class="track-name">
+            </span>
 
-        if (!url) {
-          button.disabled = true;
-          return;
-        }
+          </div>
 
-        const iframe = document.createElement("iframe");
-        iframe.setAttribute("scrolling", "no");
-        iframe.setAttribute("frameborder", "no");
-        iframe.setAttribute("allow", "autoplay");
-        iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false`;
-        host.appendChild(iframe);
+          <div class="track-release">
+            ${formatReleaseDate(
+              item.created_at ||
+              item.release_date
+            )}
+          </div>
 
-        const widget = SC.Widget(iframe);
-        widgets[index] = widget;
+        </div>
 
-        widget.bind(SC.Widget.Events.READY, () => {
-          widgetReady[index] = true;
+      </div>
 
-          widget.getDuration(ms => {
-            durations[index] = ms || durations[index] || 0;
-            track.querySelector(".track-duration").textContent = formatTime(durations[index]);
-            if (track === currentTrack) totalTime.textContent = formatTime(durations[index]);
-          });
 
-          widget.getCurrentSound(sound => {
-            if (!sound) return;
-            const name = sound.title || items[index].title || "Untitled";
-            track.querySelector(".track-name").textContent = name;
-            if (track === currentTrack) playerTitle.textContent = name;
+      <div
+        class="soundcloud-host"
+        aria-hidden="true">
+      </div>
 
-            if (!track.querySelector(".track-artwork").classList.contains("has-image")) {
-              const artworkUrl = sound.artwork_url || sound.user?.avatar_url || "";
-              if (artworkUrl) {
-                const artwork = track.querySelector(".track-artwork");
-                artwork.style.backgroundImage = `url("${artworkUrl}")`;
-                artwork.classList.add("has-image");
-              }
+    `;
+
+
+    article
+      .querySelector(".track-name")
+      .textContent =
+      item.title || "Untitled";
+
+
+    tracklist.appendChild(article);
+
+  });
+
+
+  tracks =
+    [...document.querySelectorAll(".track")];
+
+  widgets =
+    new Array(tracks.length);
+
+  widgetReady =
+    new Array(tracks.length)
+      .fill(false);
+
+  durations =
+    items.map(
+      item => Number(item.duration) || 0
+    );
+
+
+  initializeWidgets(items);
+}
+
+
+
+function initializeWidgets(items) {
+
+  tracks.forEach(
+    (track, index) => {
+
+      const button =
+        track.querySelector(
+          ".track-play"
+        );
+
+      const progress =
+        track.querySelector(
+          ".track-progress"
+        );
+
+      const url =
+        track.dataset.soundcloud
+          .trim();
+
+      const host =
+        track.querySelector(
+          ".soundcloud-host"
+        );
+
+
+      if (!url) {
+
+        button.disabled = true;
+
+        return;
+      }
+
+
+      const iframe =
+        document.createElement("iframe");
+
+      iframe.setAttribute(
+        "scrolling",
+        "no"
+      );
+
+      iframe.setAttribute(
+        "frameborder",
+        "no"
+      );
+
+      iframe.setAttribute(
+        "allow",
+        "autoplay"
+      );
+
+
+      iframe.src =
+        `https://w.soundcloud.com/player/?url=${
+          encodeURIComponent(url)
+        }&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false`;
+
+
+      host.appendChild(iframe);
+
+
+      const widget =
+        SC.Widget(iframe);
+
+      widgets[index] =
+        widget;
+
+
+      widget.bind(
+        SC.Widget.Events.READY,
+        () => {
+
+          widgetReady[index] =
+            true;
+
+
+          widget.getDuration(
+            ms => {
+
+              durations[index] =
+                ms ||
+                durations[index] ||
+                0;
+
+
+              track.querySelector(
+                ".track-duration"
+              ).textContent =
+                formatTime(
+                  durations[index]
+                );
+
+
+              if (track === currentTrack)
+
+                totalTime.textContent =
+                  formatTime(
+                    durations[index]
+                  );
+
             }
-          });
-        });
+          );
 
-        widget.bind(SC.Widget.Events.PLAY, () => {
-          if (currentTrack && currentTrack !== track) resetTrack(currentTrack);
-          currentTrack = track;
-          currentIndex = index;
-          track.classList.add("playing");
-          track.querySelector(".play-icon").className = "play-icon is-playing";
-          mainPlay.classList.add("is-playing");
-          playerNumber.textContent = String(index + 1).padStart(2, "0");
-          playerTitle.textContent = track.querySelector(".track-name").textContent;
-          totalTime.textContent = formatTime(durations[index]);
-        });
 
-        widget.bind(SC.Widget.Events.PAUSE, () => {
-          track.classList.remove("playing");
-          track.querySelector(".play-icon").className = "play-icon";
-          if (track === currentTrack) mainPlay.classList.remove("is-playing");
-        });
+          widget.getCurrentSound(
+            sound => {
 
-        widget.bind(SC.Widget.Events.PLAY_PROGRESS, data => {
-          const duration = durations[index] || 0;
-          const percent = duration ? (data.currentPosition / duration) * 100 : 0;
-          setProgress(track, percent);
+              if (!sound)
+                return;
 
-          if (track === currentTrack) {
-            currentTime.textContent = formatTime(data.currentPosition);
-            playerProgressFill.style.width = `${percent}%`;
+
+              const name =
+                sound.title ||
+                items[index].title ||
+                "Untitled";
+
+
+              track.querySelector(
+                ".track-name"
+              ).textContent =
+                name;
+
+
+              if (track === currentTrack)
+
+                playerTitle.textContent =
+                  name;
+
+            }
+          );
+
+        }
+      );
+
+
+      widget.bind(
+        SC.Widget.Events.PLAY,
+        () => {
+
+          if (
+            currentTrack &&
+            currentTrack !== track
+          ) {
+
+            resetTrack(
+              currentTrack
+            );
+
           }
-        });
 
-        widget.bind(SC.Widget.Events.FINISH, () => {
+
+          currentTrack =
+            track;
+
+          currentIndex =
+            index;
+
+
+          track.classList.add(
+            "playing"
+          );
+
+
+          track.querySelector(
+            ".play-icon"
+          ).className =
+            "play-icon is-playing";
+
+
+          mainPlay.classList.add(
+            "is-playing"
+          );
+
+
+          playerNumber.textContent =
+            String(index + 1)
+              .padStart(2, "0");
+
+
+          playerTitle.textContent =
+            track.querySelector(
+              ".track-name"
+            ).textContent;
+
+
+          totalTime.textContent =
+            formatTime(
+              durations[index]
+            );
+
+        }
+      );
+
+
+      widget.bind(
+        SC.Widget.Events.PAUSE,
+        () => {
+
+          track.classList.remove(
+            "playing"
+          );
+
+
+          track.querySelector(
+            ".play-icon"
+          ).className =
+            "play-icon";
+
+
+          if (track === currentTrack)
+
+            mainPlay.classList.remove(
+              "is-playing"
+            );
+
+        }
+      );
+
+
+      widget.bind(
+        SC.Widget.Events.PLAY_PROGRESS,
+        data => {
+
+          const duration =
+            durations[index] || 0;
+
+
+          const percent =
+            duration
+              ? (
+                  data.currentPosition /
+                  duration
+                ) * 100
+              : 0;
+
+
+          setProgress(
+            track,
+            percent
+          );
+
+
+          if (
+            track === currentTrack
+          ) {
+
+            currentTime.textContent =
+              formatTime(
+                data.currentPosition
+              );
+
+
+            playerProgressFill.style.width =
+              `${percent}%`;
+
+          }
+
+        }
+      );
+
+
+      widget.bind(
+        SC.Widget.Events.FINISH,
+        () => {
+
           resetTrack(track);
-          mainPlay.classList.remove("is-playing");
-          playerProgressFill.style.width = "0%";
 
-          if (index < tracks.length - 1) {
-            loadTrack(index + 1, true);
+          mainPlay.classList.remove(
+            "is-playing"
+          );
+
+          playerProgressFill.style.width =
+            "0%";
+
+
+          if (
+            index <
+            tracks.length - 1
+          ) {
+
+            loadTrack(
+              index + 1,
+              true
+            );
+
           } else {
-            currentTime.textContent = "0:00";
+
+            currentTime.textContent =
+              "0:00";
+
           }
-        });
 
-        button.addEventListener("click", () => toggleTrack(track));
+        }
+      );
 
-        progress.addEventListener("click", event => {
-          if (!widgetReady[index] || !durations[index]) return;
-          if (currentTrack !== track) loadTrack(index);
 
-          const rect = progress.getBoundingClientRect();
-          const percent = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-          widgets[index].seekTo(percent * durations[index]);
-        });
-      });
+      button.addEventListener(
+        "click",
+        () => toggleTrack(track)
+      );
+
+
+      progress.addEventListener(
+        "click",
+        event => {
+
+          if (
+            !widgetReady[index] ||
+            !durations[index]
+          )
+
+            return;
+
+
+          if (
+            currentTrack !== track
+          )
+
+            loadTrack(index);
+
+
+          const rect =
+            progress.getBoundingClientRect();
+
+
+          const percent =
+            Math.max(
+              0,
+              Math.min(
+                1,
+                (
+                  event.clientX -
+                  rect.left
+                ) / rect.width
+              )
+            );
+
+
+          widgets[index].seekTo(
+            percent *
+            durations[index]
+          );
+
+        }
+      );
+
     }
+  );
+}
 
-    mainPlay.addEventListener("click", () => {
-      if (!currentTrack) return loadTrack(0, true);
-      if (!widgetReady[currentIndex]) return;
 
-      widgets[currentIndex].isPaused(paused => {
-        if (paused) widgets[currentIndex].play();
-        else widgets[currentIndex].pause();
-      });
-    });
 
-    prev.addEventListener("click", () => {
-      if (!currentTrack) return loadTrack(0);
-      loadTrack(currentIndex - 1, true);
-    });
+mainPlay.addEventListener(
+  "click",
+  () => {
 
-    next.addEventListener("click", () => {
-      if (!currentTrack) return loadTrack(0);
-      loadTrack(currentIndex + 1, true);
-    });
+    if (!currentTrack)
+      return loadTrack(0, true);
 
-    playerProgress.addEventListener("click", event => {
-      if (!currentTrack || !durations[currentIndex] || !widgetReady[currentIndex]) return;
+    if (!widgetReady[currentIndex])
+      return;
 
-      const rect = playerProgress.getBoundingClientRect();
-      const percent = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-      widgets[currentIndex].seekTo(percent * durations[currentIndex]);
-    });
 
-    playerProgress.addEventListener("keydown", event => {
-      if (!currentTrack || !durations[currentIndex] || !widgetReady[currentIndex]) return;
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    widgets[currentIndex].isPaused(
+      paused => {
 
-      event.preventDefault();
-      widgets[currentIndex].getPosition(position => {
-        const amount = event.key === "ArrowLeft" ? -5000 : 5000;
-        widgets[currentIndex].seekTo(Math.max(0, Math.min(durations[currentIndex], position + amount)));
-      });
-    });
+        if (paused)
+          widgets[currentIndex].play();
 
-    async function loadSoundCloudMirror() {
-      try {
-        const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
-        if (!response.ok) throw new Error(`Could not load ${DATA_URL}`);
+        else
+          widgets[currentIndex].pause();
 
-        const data = await response.json();
-        const items = Array.isArray(data) ? data : (data.tracks || []);
-        renderTracks(items);
-      } catch (error) {
-        console.error(error);
-        tracklist.innerHTML = `
-          <div style="padding:20px 0;">
-            Music is temporarily unavailable.
-          </div>
-        `;
       }
-    }
+    );
 
-    loadSoundCloudMirror();
-  </script>
+  }
+);
+
+
+
+prev.addEventListener(
+  "click",
+  () => {
+
+    if (!currentTrack)
+      return loadTrack(0);
+
+    loadTrack(
+      currentIndex - 1,
+      true
+    );
+
+  }
+);
+
+
+
+next.addEventListener(
+  "click",
+  () => {
+
+    if (!currentTrack)
+      return loadTrack(0);
+
+    loadTrack(
+      currentIndex + 1,
+      true
+    );
+
+  }
+);
+
+
+
+playerProgress.addEventListener(
+  "click",
+  event => {
+
+    if (
+      !currentTrack ||
+      !durations[currentIndex] ||
+      !widgetReady[currentIndex]
+    )
+
+      return;
+
+
+    const rect =
+      playerProgress.getBoundingClientRect();
+
+
+    const percent =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          (
+            event.clientX -
+            rect.left
+          ) / rect.width
+        )
+      );
+
+
+    widgets[currentIndex].seekTo(
+      percent *
+      durations[currentIndex]
+    );
+
+  }
+);
+
+
+
+playerProgress.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      !currentTrack ||
+      !durations[currentIndex] ||
+      !widgetReady[currentIndex]
+    )
+
+      return;
+
+
+    if (
+      event.key !== "ArrowLeft" &&
+      event.key !== "ArrowRight"
+    )
+
+      return;
+
+
+    event.preventDefault();
+
+
+    widgets[currentIndex].getPosition(
+      position => {
+
+        const amount =
+          event.key === "ArrowLeft"
+            ? -5000
+            : 5000;
+
+
+        widgets[currentIndex].seekTo(
+          Math.max(
+            0,
+            Math.min(
+              durations[currentIndex],
+              position + amount
+            )
+          )
+        );
+
+      }
+    );
+
+  }
+);
+
+
+
+async function loadSoundCloudMirror() {
+
+  try {
+
+    const response =
+      await fetch(
+        `${DATA_URL}?v=${Date.now()}`,
+        {
+          cache: "no-store"
+        }
+      );
+
+
+    if (!response.ok)
+
+      throw new Error(
+        `Could not load ${DATA_URL}`
+      );
+
+
+    const data =
+      await response.json();
+
+
+    const items =
+      Array.isArray(data)
+        ? data
+        : (data.tracks || []);
+
+
+    renderTracks(items);
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+
+    tracklist.innerHTML = `
+
+      <div style="padding:20px 0;">
+
+        Music is temporarily unavailable.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+
+loadSoundCloudMirror();
+
+</script>
 
 </body>
 </html>
