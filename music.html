@@ -208,6 +208,7 @@ nav a.active {
   height: 2px;
   background: #deded9;
   cursor: pointer;
+  touch-action: none;
 }
 
 .track-progress-fill {
@@ -373,6 +374,7 @@ nav a.active {
   height: 2px;
   background: #deded9;
   cursor: pointer;
+  touch-action: none;
 }
 
 .player-progress-fill {
@@ -1279,8 +1281,88 @@ function initializeWidgets(items) {
       );
 
 
+      let isScrubbing = false;
+
+
+      function scrubTrack(clientX) {
+
+        if (
+          !widgetReady[index] ||
+          !durations[index]
+        )
+
+          return;
+
+
+        if (
+          currentTrack !== track
+        )
+
+          loadTrack(index);
+
+
+        const rect =
+          progress.getBoundingClientRect();
+
+
+        const percent =
+          Math.max(
+            0,
+            Math.min(
+              1,
+              (
+                clientX -
+                rect.left
+              ) / rect.width
+            )
+          );
+
+
+        widgets[index].seekTo(
+          percent *
+          durations[index]
+        );
+
+
+        setProgress(
+          track,
+          percent * 100
+        );
+
+
+        if (
+          track === currentTrack
+        ) {
+
+          currentTime.textContent =
+            formatTime(
+              percent *
+              durations[index]
+            );
+
+
+          playerProgressFill.style.width =
+            `${percent * 100}%`;
+
+        }
+
+      }
+
+
       progress.addEventListener(
         "click",
+        event => {
+
+          scrubTrack(
+            event.clientX
+          );
+
+        }
+      );
+
+
+      progress.addEventListener(
+        "pointerdown",
         event => {
 
           if (
@@ -1291,34 +1373,89 @@ function initializeWidgets(items) {
             return;
 
 
+          event.preventDefault();
+
+          isScrubbing = true;
+
+          progress.setPointerCapture(
+            event.pointerId
+          );
+
+          scrubTrack(
+            event.clientX
+          );
+
+        }
+      );
+
+
+      progress.addEventListener(
+        "pointermove",
+        event => {
+
+          if (!isScrubbing)
+            return;
+
+
+          event.preventDefault();
+
+          scrubTrack(
+            event.clientX
+          );
+
+        }
+      );
+
+
+      progress.addEventListener(
+        "pointerup",
+        event => {
+
+          if (!isScrubbing)
+            return;
+
+
+          event.preventDefault();
+
+          scrubTrack(
+            event.clientX
+          );
+
+          isScrubbing = false;
+
           if (
-            currentTrack !== track
+            progress.hasPointerCapture(
+              event.pointerId
+            )
           )
 
-            loadTrack(index);
-
-
-          const rect =
-            progress.getBoundingClientRect();
-
-
-          const percent =
-            Math.max(
-              0,
-              Math.min(
-                1,
-                (
-                  event.clientX -
-                  rect.left
-                ) / rect.width
-              )
+            progress.releasePointerCapture(
+              event.pointerId
             );
 
+        }
+      );
 
-          widgets[index].seekTo(
-            percent *
-            durations[index]
-          );
+
+      progress.addEventListener(
+        "pointercancel",
+        event => {
+
+          if (!isScrubbing)
+            return;
+
+
+          isScrubbing = false;
+
+          if (
+            progress.hasPointerCapture(
+              event.pointerId
+            )
+          )
+
+            progress.releasePointerCapture(
+              event.pointerId
+            );
 
         }
       );
@@ -1391,8 +1528,76 @@ next.addEventListener(
 
 
 
+let isPlayerScrubbing = false;
+
+
+function scrubPlayer(clientX) {
+
+  if (
+    !currentTrack ||
+    !durations[currentIndex] ||
+    !widgetReady[currentIndex]
+  )
+
+    return;
+
+
+  const rect =
+    playerProgress.getBoundingClientRect();
+
+
+  const percent =
+    Math.max(
+      0,
+      Math.min(
+        1,
+        (
+          clientX -
+          rect.left
+        ) / rect.width
+      )
+    );
+
+
+  widgets[currentIndex].seekTo(
+    percent *
+    durations[currentIndex]
+  );
+
+
+  currentTime.textContent =
+    formatTime(
+      percent *
+      durations[currentIndex]
+    );
+
+
+  playerProgressFill.style.width =
+    `${percent * 100}%`;
+
+
+  setProgress(
+    currentTrack,
+    percent * 100
+  );
+
+}
+
+
 playerProgress.addEventListener(
   "click",
+  event => {
+
+    scrubPlayer(
+      event.clientX
+    );
+
+  }
+);
+
+
+playerProgress.addEventListener(
+  "pointerdown",
   event => {
 
     if (
@@ -1404,27 +1609,89 @@ playerProgress.addEventListener(
       return;
 
 
-    const rect =
-      playerProgress.getBoundingClientRect();
+    event.preventDefault();
+
+    isPlayerScrubbing = true;
+
+    playerProgress.setPointerCapture(
+      event.pointerId
+    );
+
+    scrubPlayer(
+      event.clientX
+    );
+
+  }
+);
 
 
-    const percent =
-      Math.max(
-        0,
-        Math.min(
-          1,
-          (
-            event.clientX -
-            rect.left
-          ) / rect.width
-        )
+playerProgress.addEventListener(
+  "pointermove",
+  event => {
+
+    if (!isPlayerScrubbing)
+      return;
+
+
+    event.preventDefault();
+
+    scrubPlayer(
+      event.clientX
+    );
+
+  }
+);
+
+
+playerProgress.addEventListener(
+  "pointerup",
+  event => {
+
+    if (!isPlayerScrubbing)
+      return;
+
+
+    event.preventDefault();
+
+    scrubPlayer(
+      event.clientX
+    );
+
+    isPlayerScrubbing = false;
+
+    if (
+      playerProgress.hasPointerCapture(
+        event.pointerId
+      )
+    )
+
+      playerProgress.releasePointerCapture(
+        event.pointerId
       );
 
+  }
+);
 
-    widgets[currentIndex].seekTo(
-      percent *
-      durations[currentIndex]
-    );
+
+playerProgress.addEventListener(
+  "pointercancel",
+  event => {
+
+    if (!isPlayerScrubbing)
+      return;
+
+
+    isPlayerScrubbing = false;
+
+    if (
+      playerProgress.hasPointerCapture(
+        event.pointerId
+      )
+    )
+
+      playerProgress.releasePointerCapture(
+        event.pointerId
+      );
 
   }
 );
