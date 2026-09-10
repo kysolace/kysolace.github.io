@@ -1,5 +1,142 @@
 {
   "profile": "https://soundcloud.com/kysolace",
-  "updated_at": null,
-  "tracks": []
+  "user": {
+    "id": 257122424,
+    "urn": "soundcloud:users:257122424",
+    "username": "kysolace",
+    "permalink_url": "https://soundcloud.com/kysolace?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567"
+  },
+  "updated_at": "2026-09-10T06:19:46.783Z",
+  "tracks": [
+    {
+      "id": 2395922064,
+      "urn": "soundcloud:tracks:2395922064",
+      "title": "pale",
+      "permalink_url": "https://soundcloud.com/kysolace/pale?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/artworks-KzvVZycDyO5n40Ff-Ry3Urw-large.jpg",
+      "duration": 90857,
+      "created_at": "2026/09/07 10:38:22 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 2355868862,
+      "urn": "soundcloud:tracks:2355868862",
+      "title": "dan - leo prod. cxo",
+      "permalink_url": "https://soundcloud.com/kysolace/dan-leo?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/avatars-RsKu5NEhsAftAaBI-c71T8w-large.jpg",
+      "duration": 135189,
+      "created_at": "2026/07/08 21:22:40 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 2342940944,
+      "urn": "soundcloud:tracks:2342940944",
+      "title": "slip unfinished",
+      "permalink_url": "https://soundcloud.com/kysolace/slip?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/avatars-RsKu5NEhsAftAaBI-c71T8w-large.jpg",
+      "duration": 79338,
+      "created_at": "2026/06/20 06:49:00 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 2320393355,
+      "urn": "soundcloud:tracks:2320393355",
+      "title": "mud",
+      "permalink_url": "https://soundcloud.com/kysolace/mud?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/avatars-RsKu5NEhsAftAaBI-c71T8w-large.jpg",
+      "duration": 106666,
+      "created_at": "2026/05/14 09:18:30 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 2301159983,
+      "urn": "soundcloud:tracks:2301159983",
+      "title": "raw",
+      "permalink_url": "https://soundcloud.com/kysolace/raw?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/avatars-RsKu5NEhsAftAaBI-c71T8w-large.jpg",
+      "duration": 89887,
+      "created_at": "2026/04/12 11:58:58 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 2169845283,
+      "urn": "soundcloud:tracks:2169845283",
+      "title": "7.21.25",
+      "permalink_url": "https://soundcloud.com/kysolace/72125a?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/artworks-G6iouhuUqgNqiArz-HE3BTA-large.jpg",
+      "duration": 159451,
+      "created_at": "2025/09/13 07:48:26 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 1937765234,
+      "urn": "soundcloud:tracks:1937765234",
+      "title": "untitled",
+      "permalink_url": "https://soundcloud.com/kysolace/yearn?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/artworks-pEaLuIuPc97ACKdH-g3kyFw-large.jpg",
+      "duration": 60473,
+      "created_at": "2024/10/19 11:38:33 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 1625736270,
+      "urn": "soundcloud:tracks:1625736270",
+      "title": "I Am Losing My Fucking Mind",
+      "permalink_url": "https://soundcloud.com/kysolace/i-am-losing-my-mind?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/artworks-sfywQaKvEomb5RzA-gd0Ilw-large.jpg",
+      "duration": 515109,
+      "created_at": "2023/09/26 10:55:35 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 1233683389,
+      "urn": "soundcloud:tracks:1233683389",
+      "title": "butterflies ft. dan",
+      "permalink_url": "https://soundcloud.com/kysolace/butterflies?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/artworks-uARbmdn5LUDvK2rP-sMy5mQ-large.jpg",
+      "duration": 202266,
+      "created_at": "2022/03/17 03:09:45 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    },
+    {
+      "id": 333834964,
+      "urn": "soundcloud:tracks:333834964",
+      "title": "12",
+      "permalink_url": "https://soundcloud.com/kysolace/midnight?utm_medium=api&utm_campaign=social_sharing&utm_source=id_335567",
+      "artwork_url": "https://i1.sndcdn.com/artworks-XLEK2GJAA1UpTzFl-sMTOXg-large.jpg",
+      "duration": 273318,
+      "created_at": "2017/07/19 06:53:48 +0000",
+      "release_date": null,
+      "description": null,
+      "access": "playable",
+      "genre": null
+    }
+  ]
 }
