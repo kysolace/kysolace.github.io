@@ -1,0 +1,521 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f5f5f0;
+  color: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+body {
+  min-height: 100vh;
+  padding-bottom: 90px;
+}
+
+
+/* HEADER */
+
+.site-header {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 18px;
+  background: #f5f5f0;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 18px;
+}
+
+nav a {
+  color: #111;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline;
+}
+
+
+/* PAGE */
+
+.audio-page {
+  width: 100%;
+  padding: 67px 18px 50px;
+}
+
+
+/* TRACKLIST */
+
+.project {
+  width: 100%;
+  max-width: 900px;
+}
+
+.tracklist {
+  width: 100%;
+
+  /*
+    Space between each track.
+    Increase this number if you want
+    the tracks even more spread out.
+  */
+  row-gap: 18px;
+}
+
+
+/*
+  TRACK COLUMNS
+
+  30px  = play button
+  1fr   = track name + progress
+  42px  = duration
+  65px  = release date
+*/
+
+.track {
+  display: grid;
+
+  grid-template-columns:
+    30px
+    minmax(0, 1fr)
+    42px
+    65px;
+
+  align-items: center;
+
+  column-gap: 8px;
+
+  min-height: 62px;
+
+  /*
+    No divider.
+  */
+
+  border: 0;
+
+  transition: opacity .15s ease;
+}
+
+.track:hover {
+  opacity: .65;
+}
+
+
+/* PLAY BUTTON */
+
+.track-play {
+  appearance: none;
+
+  border: 0;
+  background: transparent;
+
+  width: 24px;
+  height: 24px;
+
+  padding: 0;
+
+  color: #111;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+
+  cursor: pointer;
+}
+
+.track-play:hover {
+  opacity: .5;
+}
+
+.play-icon {
+  display: block;
+}
+
+
+/* TRACK MAIN */
+
+.track-main {
+  min-width: 0;
+}
+
+.track-title {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  font-size: 11px;
+}
+
+.track-number {
+  width: 18px;
+
+  color: #888;
+
+  font-size: 9px;
+}
+
+.track.playing .track-title {
+  text-decoration: underline;
+}
+
+
+/* TRACK PROGRESS */
+
+.track-progress {
+  width: 100%;
+
+  height: 2px;
+
+  margin-top: 7px;
+
+  background: #deded9;
+
+  cursor: pointer;
+}
+
+.track-progress-fill {
+  width: 0;
+
+  height: 100%;
+
+  background: #111;
+}
+
+
+/* DURATION */
+
+.track-duration {
+  text-align: right;
+
+  font-size: 9px;
+
+  color: #777;
+
+  white-space: nowrap;
+}
+
+
+/* RELEASE DATE */
+
+.track-release {
+  text-align: right;
+
+  font-size: 9px;
+
+  color: #777;
+
+  white-space: nowrap;
+}
+
+
+/* HIDE NATIVE AUDIO */
+
+.track audio {
+  display: none;
+}
+
+
+/* BOTTOM PLAYER */
+
+.player {
+  position: fixed;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+
+  z-index: 20;
+
+  background: #f5f5f0;
+
+  border-top: 1px solid #d8d8d3;
+}
+
+.player-inner {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  gap: 25px;
+
+  padding: 11px 18px;
+}
+
+
+/* PLAYER TRACK */
+
+.player-track {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.player-number {
+  color: #888;
+
+  font-size: 9px;
+}
+
+.player-title {
+  font-size: 10px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* PLAYER CONTROLS */
+
+.player-controls {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+}
+
+.player-controls button {
+  appearance: none;
+
+  border: 0;
+  background: transparent;
+
+  padding: 0;
+
+  color: #111;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.player-controls button:hover {
+  opacity: .5;
+}
+
+.player-controls .main-play {
+  width: 28px;
+  height: 28px;
+
+  font-size: 10px;
+
+  border: 1px solid #111;
+
+  border-radius: 50%;
+}
+
+
+/* PLAYER TIME */
+
+.player-time {
+  display: grid;
+
+  grid-template-columns:
+    32px
+    minmax(60px, 1fr)
+    32px;
+
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 8px;
+
+  color: #777;
+}
+
+.player-time > span:last-child {
+  text-align: right;
+}
+
+
+/* PLAYER PROGRESS */
+
+.player-progress {
+  width: 100%;
+
+  height: 2px;
+
+  background: #deded9;
+
+  cursor: pointer;
+}
+
+.player-progress-fill {
+  width: 0;
+
+  height: 100%;
+
+  background: #111;
+}
+
+
+/* TABLET */
+
+@media (max-width: 800px) {
+
+  .audio-page {
+    padding-top: 62px;
+  }
+
+  .project {
+    max-width: 100%;
+  }
+
+}
+
+
+/* PHONE */
+
+@media (max-width: 600px) {
+
+  body {
+    padding-bottom: 116px;
+  }
+
+  .audio-page {
+    padding: 62px 12px 35px;
+  }
+
+  .tracklist {
+    row-gap: 16px;
+  }
+
+  .track {
+    grid-template-columns:
+      25px
+      minmax(0, 1fr)
+      38px
+      58px;
+
+    min-height: 58px;
+
+    column-gap: 6px;
+  }
+
+  .track-title {
+    gap: 8px;
+  }
+
+  .track-progress {
+    margin-top: 6px;
+  }
+
+  .track-release {
+    font-size: 8px;
+  }
+
+
+  /* MOBILE PLAYER */
+
+  .player-inner {
+    display: grid;
+
+    grid-template-columns:
+      1fr
+      auto;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+  }
+
+  .player-track {
+    min-width: 0;
+  }
+
+  .player-controls {
+    grid-column: 2;
+    grid-row: 1;
+
+    gap: 11px;
+  }
+
+  .player-controls button {
+    font-size: 14px;
+  }
+
+  .player-controls .main-play {
+    width: 27px;
+    height: 27px;
+  }
+
+  .player-time {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+}
+
+
+/* VERY SMALL PHONES */
+
+@media (max-width: 380px) {
+
+  .tracklist {
+    row-gap: 14px;
+  }
+
+  .track {
+    grid-template-columns:
+      23px
+      minmax(0, 1fr)
+      35px
+      52px;
+  }
+
+  .track-release {
+    font-size: 7px;
+  }
+
+}
+
+/* SOUNDCLOUD BACKEND */
+.soundcloud-host {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.soundcloud-host iframe {
+  width: 1px;
+  height: 1px;
+  border: 0;
+}
+
+.track-play:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}

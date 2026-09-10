@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<title>kysolace — Archive</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav>
+    <a href="index.html">kysolace</a> <a href="music.html">Music</a>
+    <a href="archive.html" class="active">Archive</a>
+    <a href="ideas.html">Ideas</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="archive">
+
+  <div class="grid">
+
+    <article class="tile">
+      <img src="images/img.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 01</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-02.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 02</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-03.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 03</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-04.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 04</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-05.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 05</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-06.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 06</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-07.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 07</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-08.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 08</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-09.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 09</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-10.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 10</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-11.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 11</div>
+    </article>
+
+    <article class="tile">
+      <img src="images/archive-12.jpg" alt="" onclick="openLightbox(this.src)">
+      <div class="caption">ARCHIVE — 12</div>
+    </article>
+
+  </div>
+
+</section>
+
+</main>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-image" src="" alt="">
+</div>
+
+<script>
+function openLightbox(src) {
+  const lightbox = document.getElementById("lightbox");
+  const image = document.getElementById("lightbox-image");
+
+  image.src = src;
+  lightbox.classList.add("active");
+  document.body.classList.add("lightbox-open");
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const image = document.getElementById("lightbox-image");
+
+  lightbox.classList.remove("active");
+  document.body.classList.remove("lightbox-open");
+  image.src = "";
+}
+</script>
+
+</body>
+</html>
