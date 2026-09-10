@@ -761,6 +761,12 @@ function resetTrack(track) {
     icon.className = "play-icon";
 
   setProgress(track, 0);
+
+  const duration =
+    track.querySelector(".track-duration");
+
+  if (duration && !duration.textContent.trim())
+    duration.textContent = "—";
 }
 
 
@@ -1215,15 +1221,15 @@ function initializeWidgets(items) {
               : 0;
 
 
-          setProgress(
-            track,
-            percent
-          );
-
-
           if (
             track === currentTrack
           ) {
+
+            setProgress(
+              track,
+              percent
+            );
+
 
             currentTime.textContent =
               formatTime(
