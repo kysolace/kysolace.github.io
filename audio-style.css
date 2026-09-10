@@ -139,8 +139,51 @@ nav a.active {
   opacity: .5;
 }
 
-.play-icon {
+/* CSS-DRAWN PLAY / PAUSE ICONS */
+.play-icon,
+.play-symbol {
   display: block;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid currentColor;
+  margin: 0 auto;
+}
+
+.play-icon.is-playing {
+  width: 8px;
+  height: 10px;
+  border: 0;
+  position: relative;
+}
+
+.play-icon.is-playing::before,
+.play-icon.is-playing::after,
+.main-play.is-playing .play-symbol::before,
+.main-play.is-playing .play-symbol::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 10px;
+  background: currentColor;
+}
+
+.play-icon.is-playing::before,
+.main-play.is-playing .play-symbol::before { left: 0; }
+.play-icon.is-playing::after,
+.main-play.is-playing .play-symbol::after { right: 0; }
+
+.main-play .play-symbol {
+  position: relative;
+  margin: 0 auto;
+}
+
+.main-play.is-playing .play-symbol {
+  width: 8px;
+  height: 10px;
+  border: 0;
 }
 
 
