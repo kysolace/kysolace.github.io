@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -26,57 +27,7 @@
 
 <section class="archive">
 
-  <div class="grid">
-
-    <article class="tile">
-      <img src="images/img.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-02.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-03.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-04.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-05.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-06.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-07.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-08.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-09.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-10.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-11.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-    <article class="tile">
-      <img src="images/archive-12.jpg" alt="" onclick="openLightbox(this.src)">
-    </article>
-
-  </div>
+  <div class="grid" id="archive-grid"></div>
 
 </section>
 
@@ -87,6 +38,39 @@
 </div>
 
 <script>
+async function loadArchive() {
+  const grid = document.getElementById("archive-grid");
+
+  try {
+    const response = await fetch("archive-photos.json", {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("Could not load archive-photos.json");
+    }
+
+    const photos = await response.json();
+
+    photos.forEach(photo => {
+      const article = document.createElement("article");
+      article.className = "tile";
+
+      const image = document.createElement("img");
+      image.src = photo.image;
+      image.alt = photo.alt || "";
+      image.loading = "lazy";
+      image.onclick = () => openLightbox(photo.image);
+
+      article.appendChild(image);
+      grid.appendChild(article);
+    });
+
+  } catch (error) {
+    console.error("Archive failed to load:", error);
+  }
+}
+
 function openLightbox(src) {
   const lightbox = document.getElementById("lightbox");
   const image = document.getElementById("lightbox-image");
@@ -104,6 +88,8 @@ function closeLightbox() {
   document.body.classList.remove("lightbox-open");
   image.src = "";
 }
+
+loadArchive();
 </script>
 
 </body>
