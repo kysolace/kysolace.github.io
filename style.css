@@ -300,35 +300,3 @@ nav a.active {
 body.lightbox-open {
   overflow: hidden;
 }
-
-/* RELEASES */
-.releases {
-  padding: 67px 18px 40px;
-  width: 100%;
-  max-width: 1200px;
-  text-align: left;
-}
-
-.release {
-  margin: 0 0 32px;
-}
-
-.release-title {
-  margin: 0 0 10px;
-  padding: 0;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.35;
-}
-
-.release-track {
-  margin: 0 0 4px;
-  padding: 0;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.35;
-}
-
-.release-track span {
-  margin-left: 4px;
-}
