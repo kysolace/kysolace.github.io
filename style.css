@@ -42,15 +42,9 @@ a:focus {
 
 .brand {
   font-weight: 700;
-  text-decoration: none;
   color: #111;
   letter-spacing: .04em;
   white-space: nowrap;
-}
-
-.brand:hover,
-.brand.active {
-  text-decoration: none;
 }
 
 nav {
@@ -61,13 +55,7 @@ nav {
 
 nav a {
   color: #111;
-  text-decoration: none;
   white-space: nowrap;
-}
-
-nav a:hover,
-nav a.active {
-  text-decoration: none;
 }
 
 /* ARCHIVE */
@@ -85,9 +73,9 @@ nav a.active {
 }
 
 .archive-head h1 {
+  margin: 0;
   font-size: 12px;
   font-weight: 400;
-  margin: 0;
 }
 
 .archive-head span {
@@ -111,23 +99,23 @@ nav a.active {
   overflow: hidden;
 }
 
-.placeholder {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: #e6e6e3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 11px;
-}
-
 .tile img {
   display: block;
   width: auto;
   height: auto;
   max-width: 900px;
   object-fit: contain;
+}
+
+.placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6e6e3;
+  color: #aaa;
+  font-size: 11px;
 }
 
 .caption {
@@ -143,15 +131,15 @@ nav a.active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   gap: 6px;
+  text-align: center;
 }
 
 .home h1 {
+  margin: 0;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: .04em;
-  margin: 0;
 }
 
 .home p {
@@ -166,24 +154,9 @@ nav a.active {
 
 .home-links a {
   color: #111;
-  text-decoration: none;
-}
-
-.home-links a:hover {
-  text-decoration: none;
 }
 
 /* BIO */
-.bio a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.bio a:hover {
-  color: inherit;
-  text-decoration: none;
-}
-
 .bio {
   padding: 80px 18px 40px;
   display: grid;
@@ -192,15 +165,19 @@ nav a.active {
   max-width: 1200px;
 }
 
+.bio a {
+  color: inherit;
+}
+
 .bio h1,
 .bio h2 {
+  margin: 0 0 15px;
   font-size: 12px;
   font-weight: 400;
-  margin: 0 0 15px;
 }
 
 .bio p {
-  margin: 0 0 18px;
+  margin: 0;
   max-width: 330px;
 }
 
@@ -210,9 +187,9 @@ nav a.active {
 
 /* RELEASES */
 .releases {
-  padding: 80px 18px 40px;
   width: 100%;
   max-width: 1200px;
+  padding: 80px 18px 40px;
   text-align: left;
 }
 
@@ -238,6 +215,22 @@ nav a.active {
 
 .release-track span {
   margin-left: 4px;
+}
+
+.release-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.streaming-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.streaming-links a {
+  color: #111;
 }
 
 /* RELEASE IMAGES */
@@ -293,11 +286,11 @@ nav a.active {
   display: none;
   position: fixed;
   inset: 0;
+  z-index: 9999;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   background: rgba(0, 0, 0, .9);
-  z-index: 9999;
   place-items: center;
   overflow: hidden;
   cursor: default;
