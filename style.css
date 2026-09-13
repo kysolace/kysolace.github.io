@@ -244,10 +244,11 @@ nav a {
     padding-top: 62px;
   }
 
-.bio {
-  grid-template-columns: 1fr 1fr;
-  padding-top: 80px;
-  gap: 20px;
+  .bio {
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    gap: 20px;
+  }
 }
 
 /* PHONE */
@@ -277,6 +278,7 @@ nav a {
 
   .bio {
     grid-template-columns: 1fr;
+    padding-top: 80px;
   }
 }
 
@@ -292,7 +294,6 @@ nav a {
   background: rgba(0, 0, 0, .9);
   place-items: center;
   overflow: hidden;
-
   cursor: default;
 }
 
