@@ -62,7 +62,7 @@ nav a {
 .archive {
   width: 100%;
   max-width: 100%;
-  padding: 80px 18px 30px;
+  padding: 67px 18px 30px;
 }
 
 .archive-head {
@@ -244,11 +244,10 @@ nav a {
     padding-top: 62px;
   }
 
-  .bio {
-    grid-template-columns: 1fr 1fr;
-    padding-top: 70px;
-    gap: 20px;
-  }
+.bio {
+  grid-template-columns: 1fr 1fr;
+  padding-top: 80px;
+  gap: 20px;
 }
 
 /* PHONE */
@@ -256,7 +255,7 @@ nav a {
   .archive {
     width: 100%;
     max-width: 100%;
-    padding: 80px 12px 30px;
+    padding: 62px 12px 30px;
   }
 
   .tile {
@@ -293,6 +292,7 @@ nav a {
   background: rgba(0, 0, 0, .9);
   place-items: center;
   overflow: hidden;
+
   cursor: default;
 }
 
