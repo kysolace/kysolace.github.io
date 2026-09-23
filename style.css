@@ -15,6 +15,23 @@ body {
 
 body {
   min-height: 100vh;
+  position: relative;
+}
+
+/* BACKGROUND OVERLAY */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("images/bg.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: auto 70vh;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* GLOBAL LINKS */
@@ -253,6 +270,11 @@ nav a {
 
 /* PHONE */
 @media (max-width: 480px) {
+  body::before {
+    background-size: 100vw auto;
+    background-position: right bottom;
+  }
+
   .archive {
     width: 100%;
     max-width: 100%;
