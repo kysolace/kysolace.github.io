@@ -16,7 +16,6 @@ body {
 /* GLOBAL SCROLL RULES (all pages, all viewport sizes) */
 html {
   overflow-x: hidden;       /* no horizontal scroll, anywhere */
-  overscroll-behavior: none; /* no rubber-band/bounce past page edges */
 }
 
 body {
@@ -24,7 +23,6 @@ body {
   min-height: 100dvh;
   position: relative;
   overflow-x: hidden;
-  overscroll-behavior: none;
   touch-action: pan-y;      /* allow vertical touch-scroll only; blocks horizontal swipe + pinch pan */
 }
 
@@ -290,6 +288,11 @@ nav a {
 
 /* PHONE */
 @media (max-width: 480px) {
+  html,
+  body {
+    overscroll-behavior: none; /* kill iOS Safari rubber-band bounce, phone widths only */
+  }
+
   body::before {
     width: 100%;
     height: 100dvh;
