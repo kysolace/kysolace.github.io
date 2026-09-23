@@ -271,7 +271,9 @@ nav a {
 /* PHONE */
 @media (max-width: 480px) {
   body::before {
-    background-size: 100vw auto;
+    width: 100%;
+    height: 100dvh;
+    background-size: 100% auto;
     background-position: right bottom;
   }
 
