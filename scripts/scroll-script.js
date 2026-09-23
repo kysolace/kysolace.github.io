@@ -1,4 +1,7 @@
 ```js
+let mobileScrollLocked = false;
+let lockedScrollY = 0;
+
 function updateMobileScrolling() {
   const isMobile = window.matchMedia("(max-width: 480px)").matches;
 
@@ -9,29 +12,33 @@ function updateMobileScrolling() {
   const documentHeight = document.documentElement.scrollHeight;
 
   const needsScroll = documentHeight > viewportHeight + 1;
+  const shouldLock = isMobile && !needsScroll;
 
-  const noScroll = isMobile && !needsScroll;
+  if (shouldLock && !mobileScrollLocked) {
+    lockedScrollY = window.scrollY;
 
-  document.documentElement.classList.toggle(
-    "mobile-no-scroll",
-    noScroll
-  );
+    document.documentElement.classList.add("mobile-no-scroll");
+    document.body.classList.add("mobile-no-scroll");
 
-  document.body.classList.toggle(
-    "mobile-no-scroll",
-    noScroll
-  );
+    document.body.style.top = `-${lockedScrollY}px`;
 
-  if (noScroll) {
-    window.scrollTo(0, 0);
+    mobileScrollLocked = true;
+  }
+
+  if (!shouldLock && mobileScrollLocked) {
+    document.documentElement.classList.remove("mobile-no-scroll");
+    document.body.classList.remove("mobile-no-scroll");
+
+    document.body.style.top = "";
+
+    window.scrollTo(0, lockedScrollY);
+
+    mobileScrollLocked = false;
   }
 }
 
 function preventMobileScroll(event) {
-  if (
-    document.documentElement.classList.contains("mobile-no-scroll") ||
-    document.body.classList.contains("mobile-no-scroll")
-  ) {
+  if (mobileScrollLocked) {
     event.preventDefault();
   }
 }
