@@ -1,4 +1,3 @@
-```css
 * {
   box-sizing: border-box;
 }
@@ -16,7 +15,6 @@ body {
 
 /* GLOBAL SCROLL RULES (all pages, all viewport sizes) */
 html {
-  height: 100%;
   overflow-x: hidden;       /* no horizontal scroll, anywhere */
   overscroll-behavior: none; /* no rubber-band/bounce past page edges */
 }
@@ -322,6 +320,10 @@ nav a {
     aspect-ratio: 1 / 1;
   }
 
+  .gallery-page::before {
+    display: none;
+  }
+
   .bio {
     grid-template-columns: 1fr;
     padding-top: 80px;
@@ -361,4 +363,3 @@ body.lightbox-open {
   overflow: hidden;
   touch-action: none;
 }
-```
