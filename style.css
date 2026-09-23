@@ -14,9 +14,30 @@ body {
   line-height: 1.35;
 }
 
+/* GLOBAL SCROLL RULES (all pages, all viewport sizes) */
+html {
+  height: 100%;
+  overflow-x: hidden;       /* no horizontal scroll, anywhere */
+  overscroll-behavior: none; /* no rubber-band/bounce past page edges */
+}
+
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  touch-action: pan-y;      /* allow vertical touch-scroll only; blocks horizontal swipe + pinch pan */
+}
+
+/* Pages that should have ZERO scrolling in any direction: add class="no-scroll" to <body> */
+body.no-scroll {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
 }
 
 /* BACKGROUND OVERLAY */
@@ -305,23 +326,6 @@ nav a {
     grid-template-columns: 1fr;
     padding-top: 80px;
   }
-
-  /* MOBILE SCROLLING */
-  html.mobile-no-scroll {
-    overflow: hidden;
-    height: 100%;
-    overscroll-behavior: none;
-    touch-action: none;
-  }
-
-  body.mobile-no-scroll {
-    position: fixed;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    overscroll-behavior: none;
-    touch-action: none;
-  }
 }
 
 /* LIGHTBOX */
@@ -355,5 +359,6 @@ nav a {
 
 body.lightbox-open {
   overflow: hidden;
+  touch-action: none;
 }
 ```
