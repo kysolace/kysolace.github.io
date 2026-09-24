@@ -61,6 +61,12 @@ a:focus {
   text-decoration: none;
 }
 
+/* MAIN CONTENT — stays above the fixed background overlay (z-index: 0) */
+main {
+  position: relative;
+  z-index: 1;
+}
+
 /* HEADER */
 .site-header {
   position: fixed;
